@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fertilizer Suggestion</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Fertilizer Suggestion</h1>
+            <p>Get customized fertilizer suggestions based on soil data</p>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">How it Works</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="form-section" style="display:block;">
+        <div class="container">
+            <h2>Get Tailored Fertilizer Recommendations</h2>
+            <form id="fertilizerForm" action="/predict" method="POST">
+                <label for="soil-ph">Soil pH</label>
+                <input type="text" id="soil-ph" name="ph" placeholder="Enter soil pH" required>
+                
+                <label for="soil-type">Soil Type</label>
+                <input type="text" id="soil-type" name="soil" placeholder="Enter soil type" required>
+                
+                <label for="crop-type">Crop Type</label>
+                <input type="text" id="crop-type" name="crop" placeholder="Enter crop type" required>
+                
+                <label for="city">Location</label>
+                <input type="text" id="city" name="city" placeholder="Enter your city" required>
+                
+                <button type="submit" class="analyze-btn">Analyze</button>
+            </form>
+
+            {% if prediction %}
+            <div class="result" style="background-color: #eafbe6; margin-top: 25px; border-radius: 9px; padding: 20px;">
+                <h3>Fertilizer Recommendation</h3>
+                <p><strong>City:</strong> {{ city }}</p>
+                <p><strong>Temperature:</strong> {{ temp }} °C</p>
+                <p><strong>Humidity:</strong> {{ humidity }}%</p>
+                <p><strong>Rainfall:</strong> {{ rainfall }} mm</p>
+                <p><strong>Fertilizer Type:</strong> {{ fert_type }}</p>
+                <p><strong>Quantity:</strong> {{ fert_qty }} kg/hectare</p>
+                <p><strong>Timing:</strong> {{ fert_time }}</p>
+            </div>
+            {% endif %}
+
+            {% if error %}
+            <div class="result" style="background-color: #f8d7da; margin-top: 25px; border-radius: 9px; padding: 20px;">
+                <p>{{ error }}</p>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Sustainable Fertilizer Usage Optimizer | All Rights Reserved</p>
+        </div>
+    </footer>
+</body>
+</html>
